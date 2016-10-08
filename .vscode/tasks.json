@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/src/MusicStoreApi/project.json"
+                "${workspaceRoot}/src/MusicStore.Api/project.json"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
