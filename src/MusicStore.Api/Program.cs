@@ -14,10 +14,11 @@ namespace MusicStore.Api
         public static void Main(string[] args)
         {
             var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hosting.json", optional: true)
                 .AddCommandLine(args)
                 .AddEnvironmentVariables(prefix: "ASPNETCORE_")
                 .Build();
-
             var host = new WebHostBuilder()
                 .UseConfiguration(config)
                 .UseKestrel()
@@ -25,7 +26,6 @@ namespace MusicStore.Api
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
-
             host.Run();
         }
     }
