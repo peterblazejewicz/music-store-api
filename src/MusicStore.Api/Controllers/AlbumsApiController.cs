@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MusicStore.Api.Models;
 using MusicStore.Infrastructure;
+using MusicStore.Api.Models.Dto;
 
 namespace MusicStore.Api
 {
@@ -99,11 +98,12 @@ namespace MusicStore.Api
             // Save the changes to the DB
             var dbAlbum = new Album();
             _storeContext.Albums.Add(Mapper.Map(album, dbAlbum));
-			await _storeContext.SaveChangesAsync();
+            await _storeContext.SaveChangesAsync();
 
             // TODO: Handle missing record, key violations, concurrency issues, etc.
 
-            return new ObjectResult(new {
+            return new ObjectResult(new
+            {
                 Data = dbAlbum.AlbumId,
                 Message = "Album created successfully."
             });
@@ -122,9 +122,11 @@ namespace MusicStore.Api
 
             if (dbAlbum == null)
             {
-                return new ObjectResult(new {
+                return new ObjectResult(new
+                {
                     Message = string.Format("The album with ID {0} was not found.", albumId)
-                }) { StatusCode = 404 };
+                })
+                { StatusCode = 404 };
             }
 
             // Save the changes to the DB
@@ -133,7 +135,8 @@ namespace MusicStore.Api
 
             // TODO: Handle missing record, key violations, concurrency issues, etc.
 
-            return new ObjectResult (new {
+            return new ObjectResult(new
+            {
                 Message = "Album updated successfully."
             });
         }
@@ -154,63 +157,10 @@ namespace MusicStore.Api
                 // TODO: Handle missing record, key violations, concurrency issues, etc.
             }
 
-            return new ObjectResult (new {
+            return new ObjectResult(new
+            {
                 Message = "Album deleted successfully."
             });
         }
-    }
-
-    [ModelMetadataType(typeof(Album))]
-    public class AlbumChangeDto : IValidatableObject
-    {
-        public int GenreId { get; set; }
-
-        public int ArtistId { get; set; }
-
-        public string Title { get; set; }
-
-        public decimal Price { get; set; }
-
-        public string AlbumArtUrl { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // An example of object-level (i.e., multi-property) validation
-            if (this.GenreId == 13 /* Indie */) {
-                switch (SentimentAnalysis.GetSentiment(Title)) {
-                    case SentimentAnalysis.SentimentResult.Positive:
-                        yield return new ValidationResult("Sounds too positive. Indie music requires more ambiguity.");
-                        break;
-                    case SentimentAnalysis.SentimentResult.Negative:
-                        yield return new ValidationResult("Sounds too negative. Indie music requires more ambiguity.");
-                        break;
-                }
-            }
-        }
-    }
-
-    public class AlbumResultDto : AlbumChangeDto
-    {
-        public AlbumResultDto()
-        {
-            Artist = new ArtistResultDto();
-            Genre = new GenreResultDto();
-        }
-
-        public int AlbumId { get; set; }
-
-        public ArtistResultDto Artist { get; private set; }
-
-        public GenreResultDto Genre { get; private set; }
-    }
-
-    public class ArtistResultDto
-    {
-        public string Name { get; set; }
-    }
-
-    public class GenreResultDto
-    {
-        public string Name { get; set; }
     }
 }
