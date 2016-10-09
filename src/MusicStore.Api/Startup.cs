@@ -28,6 +28,16 @@ namespace MusicStore.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add CORS support
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyClient",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+            });
             // Add framework services.
             services.AddMvc();
         }
@@ -53,6 +63,7 @@ namespace MusicStore.Api
                 });
                 aBranch.UseStaticFiles();
             });
+            app.UseCors("AllowAnyClient");
             app.UseMvc();
         }
     }
