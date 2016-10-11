@@ -1,0 +1,109 @@
+{
+	"variables": [],
+	"info": {
+		"name": "MusicStore.Api",
+		"_postman_id": "7e12986c-913a-86f2-9b75-8b699d1d069d",
+		"description": "MusicStore.Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Albums",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:5000/api/albums/all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:5000/api/albums/all",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Get all albums"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:5000/api/albums?page=1&pageSize=1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Get paged albums"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/albums/mostpopular",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:5000/api/albums/mostPopular",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Get MostPopular albums"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:5000/api/albums/{albumId:int}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:5000/api/albums/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "Get Album details"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
